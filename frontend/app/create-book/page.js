@@ -1,5 +1,8 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+// BookForm.js
+
+import React, { useState } from 'react';
+import styles from './BookForm.module.css'; // Import CSS module
 
 export default function BookForm() {
   const [book, setBook] = useState({
@@ -38,40 +41,43 @@ export default function BookForm() {
   };
 
   return (
-    <div>
-      <h2>Add New Book</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Add New Book</h2>
       <form>
-        <div>
-          <label>Title:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="title" className={styles.label}>Title:</label>
           <input
             type="text"
             name="title"
             value={book.title}
             onChange={handleChange}
+            className={styles.input}
             required
           />
         </div>
-        <div>
-          <label>Author:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="author" className={styles.label}>Author:</label>
           <input
             type="text"
             name="author"
             value={book.author}
             onChange={handleChange}
+            className={styles.input}
             required
           />
         </div>
-        <div>
-          <label>Publish Year:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="publishYear" className={styles.label}>Publish Year:</label>
           <input
             type="number"
             name="publishYear"
             value={book.publishYear}
             onChange={handleChange}
+            className={styles.input}
             required
           />
         </div>
-        <button type="button" onClick={handleSave}>Save Book</button>
+        <button type="button" onClick={handleSave} className={styles.button}>Save Book</button>
       </form>
     </div>
   );

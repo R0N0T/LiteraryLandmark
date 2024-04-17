@@ -1,5 +1,7 @@
 'use client'
+
 import React, { useState, useEffect } from 'react';
+import styles from './EditBook.module.css';
 
 export default function EditBook({ params }) {
   const bookId = params.id;
@@ -8,6 +10,7 @@ export default function EditBook({ params }) {
     author: '',
     publishYear: '',
   });
+
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -50,40 +53,46 @@ export default function EditBook({ params }) {
   };
 
   return (
-    <div>
-      <h2>Edit Book</h2>
+    <div className={styles.container}> {/* Apply container class */}
+      <h2 className={styles.title}>Edit Book</h2> {/* Apply title class */}
       <form>
-        <div>
-          <label>Title:</label>
+        <div className={styles.formGroup}> {/* Apply formGroup class */}
+          <label htmlFor="title" className={styles.inputLabel}>Title:</label>
           <input
             type="text"
             name="title"
+            id="title"
             value={book.title}
             onChange={handleChange}
+            className={styles.inputField}
             required
           />
         </div>
-        <div>
-          <label>Author:</label>
+        <div className={styles.formGroup}> {/* Apply formGroup class */}
+          <label htmlFor="author" className={styles.inputLabel}>Author:</label>
           <input
             type="text"
             name="author"
+            id="author"
             value={book.author}
             onChange={handleChange}
+            className={styles.inputField}
             required
           />
         </div>
-        <div>
-          <label>Publish Year:</label>
+        <div className={styles.formGroup}> {/* Apply formGroup class */}
+          <label htmlFor="publishYear" className={styles.inputLabel}>Publish Year:</label>
           <input
             type="number"
             name="publishYear"
+            id="publishYear"
             value={book.publishYear}
             onChange={handleChange}
+            className={styles.inputField}
             required
           />
         </div>
-        <button type="button" onClick={handleSave}>Save Changes</button>
+        <button type="button" onClick={handleSave} className={styles.submitButton}>Save Changes</button> {/* Apply submitButton class */}
       </form>
     </div>
   );
