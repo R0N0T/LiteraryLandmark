@@ -3,10 +3,18 @@ import { useState, useEffect } from 'react';
 import styles from './ShowBooks.module.css'; // Import CSS module
 import Link from 'next/link';
 import DeleteBook from '../components/DeleteBook';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase/config';
+import { useRouter } from 'next/navigation';
+import { signOut } from 'firebase/auth';
 
 export default function ShowBooks() {
     const [books, setBooks] = useState([]);
-
+    const [user] = useAuthState(auth);
+    const router = useRouter();
+    if(!user) {
+        router.push('/login');
+    }
     useEffect(() => {
         async function fetchBooks() {
             try {
@@ -23,27 +31,13 @@ export default function ShowBooks() {
         fetchBooks();
     }, []);
 
-    const handleEdit = (id) => {
-        // Handle edit functionality
-        console.log(`Editing book with id: ${id}`);
-    };
-
-    const handleView = (id) => {
-        // Handle view functionality
-        console.log(`Viewing book with id: ${id}`);
-    };
-
-    const handleDelete = (id) => {
-        // Handle delete functionality
-        console.log(`Deleting book with id: ${id}`);
-    };
-
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>List of Books</h1>
             <button className={`${styles.button} ${styles.addButton}`}>
                 <Link href="/create-book">Add book</Link>
-            </button>   
+            </button>  
+            <button onClick={() => signOut(auth)} className={`${styles.button} ${styles.signOutButton}`}>Sign Out</button>
             <div className={styles.bookList}>
                 {books.map((book, index) => (
                     <div key={index} className={styles.bookCard}>
