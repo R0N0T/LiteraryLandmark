@@ -1,9 +1,8 @@
-'use client'
-// ShowBooks.js
-
+'use client';
 import { useState, useEffect } from 'react';
 import styles from './ShowBooks.module.css'; // Import CSS module
 import Link from 'next/link';
+import DeleteBook from '../components/DeleteBook';
 
 export default function ShowBooks() {
     const [books, setBooks] = useState([]);
@@ -42,19 +41,22 @@ export default function ShowBooks() {
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>List of Books</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <button className={`${styles.button} ${styles.addButton}`}>
+                <Link href="/create-book">Add book</Link>
+            </button>   
+            <div className={styles.bookList}>
                 {books.map((book, index) => (
                     <div key={index} className={styles.bookCard}>
                         <h2 className={styles.bookTitle}>{book.title}</h2>
                         <p className={styles.bookInfo}><strong>Author:</strong> {book.author}</p>
                         <p className={styles.bookInfo}><strong>Publish Year:</strong> {book.publishYear}</p>
                         <div className={styles.buttonGroup}>
-                            <button className={styles.button}>
+                            <button className={`${styles.button} ${styles.editButton}`}>
                                 <Link href={`/edit-book/${book._id}`}>
                                     Edit
                                 </Link>
                             </button>
-                            <button onClick={() => handleDelete(book.id)} className={styles.button}>Delete</button>
+                            <DeleteBook id={book._id} />   
                         </div>
                     </div>
                 ))}
